@@ -19,26 +19,31 @@ class DishDetails extends Component{
                 return(
                     <ListGroupItem key={comment.id}>
                         <ListGroupItemHeading>{comment.comment}</ListGroupItemHeading>
-                        <ListGroupItemText>{comment.author}{comment.date}</ListGroupItemText>
+                        <ListGroupItemText>{comment.author}, {new Intl.DateTimeFormat('en-IN',
+                                                                                        {year : 'numeric', month:'short', day : '2-digit'}
+                                                                                        ).format(new Date(Date.parse(comment.date)))}1 </ListGroupItemText>
                     </ListGroupItem>
                 )
             });
 
             return(
-                <div className={"row"}>
-                    <div className={"col-12 col-md-5 m-1"}>
-                        <Card>
-                            <CardImg src={dish.image} alt={dish.name} />
-                            <CardBody>
-                                <CardTitle>{dish.title}</CardTitle>
-                                <CardBody>{dish.description}</CardBody>
-                            </CardBody>
-                        </Card>
+
+                <div className="container">
+                    <div className="row">
+                        <div className={"col-12 col-md-5 m-1"}>
+                            <Card>
+                                <CardImg src={dish.image} alt={dish.name} />
+                                <CardBody>
+                                    <CardTitle>{dish.title}</CardTitle>
+                                    <CardBody>{dish.description}</CardBody>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <ListGroup className={"col-12 col-md-5 m-1"}>
+                            <h3>Comments</h3>
+                            {DishComments}
+                        </ListGroup>
                     </div>
-                    <ListGroup className={"col-12 col-md-5 m-1"}>
-                        <h3>Comments</h3>
-                        {DishComments}
-                    </ListGroup>
                 </div>
             )
 
