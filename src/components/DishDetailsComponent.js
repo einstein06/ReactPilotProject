@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Card, CardImg, CardImgOverlay, CardBody, CardText, CardTitle} from 'reactstrap';
+import {ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 
 class DishDetails extends Component{
 
@@ -16,12 +17,10 @@ class DishDetails extends Component{
         if (dish != null){
             const DishComments = this.props.dish.comments.map((comment) => {
                 return(
-                    <div key={comment.id}>
-                        <p>
-                            <b>{comment.comment}</b><br/>
-                            --{comment.author}{comment.date}
-                        </p>
-                    </div>
+                    <ListGroupItem key={comment.id}>
+                        <ListGroupItemHeading>{comment.comment}</ListGroupItemHeading>
+                        <ListGroupItemText>{comment.author}{comment.date}</ListGroupItemText>
+                    </ListGroupItem>
                 )
             });
 
@@ -36,11 +35,11 @@ class DishDetails extends Component{
                             </CardBody>
                         </Card>
                     </div>
-                    <div className={"col-12 col-md-5 m-1"}>
+                    <ListGroup className={"col-12 col-md-5 m-1"}>
+                        <h3>Comments</h3>
                         {DishComments}
-                    </div>
+                    </ListGroup>
                 </div>
-
             )
 
         }else{
@@ -50,8 +49,6 @@ class DishDetails extends Component{
         }
 
     }
-
-
 
 }
 
