@@ -1,15 +1,18 @@
+import DishDetails from './DishDetailsComponent';
 import React, { Component } from 'react';
-// import { Media } from 'reactstrap';
 import {Card,  CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
 
 class Menu extends Component{
 
     constructor(props){
+
         super(props);
 
         this.state = {
             selectedDish : null
         };
+
+        console.log('Menu component constructor() method is invoked');
 
     }
 
@@ -22,13 +25,13 @@ class Menu extends Component{
         if (dish != null){
 
             return(
-                <Card>
-                    <CardImg width={"100%"} src={dish.image} alt={dish.title}/>
-                    <CardBody>
-                        <CardTitle>{dish.title}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <DishDetails dish={this.state.selectedDish}>
+                    {/*<CardImg width={"100%"} src={dish.image} alt={dish.title}/>*/}
+                    {/*<CardBody>*/}
+                        {/*<CardTitle>{dish.title}</CardTitle>*/}
+                        {/*<CardText>{dish.description}</CardText>*/}
+                    {/*</CardBody>*/}
+                </DishDetails>
             )
 
         }else{
@@ -39,32 +42,37 @@ class Menu extends Component{
 
     }
 
+    // getDerivedStateFromProps(){
+    //     console.log('Menu componet getDerivedStateFromProps() method is invoked');
+    // }
+
+    componentDidMount(){
+        console.log('Menu componet componentDidMount() method is invoked');
+    }
+
     render(){
 
         const menu = this.props.dishes.map((dish) =>{
            return (
                <div key={dish.id} className="col-12 col-md-5 m-1">
                    <Card onClick={() => this.onDishSelect(dish)}>
-                       <CardImg width="100%" object src={dish.image} alt={dish.name}/>
-                       <CardImgOverlay body className="ml-5">
+                       <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                       <CardImgOverlay className="ml-5">
                            <CardTitle>{dish.name}</CardTitle>
-                           {/*<p>{dish.description}</p>*/}
                        </CardImgOverlay>
                    </Card>
                </div>
            )
         });
 
+        console.log('Menu componet render() method is invoked');
+
         return (
             <div className="container">
                 <div className="row">
-                    {/*<Media list>*/}
-                        {menu};
-                    {/*</Media>*/}
-                </div>
-                <div className={"row"}>
+                    {menu}
                     {this.renderDish(this.state.selectedDish)}
-                </div>
+                 </div>
             </div>
         );
     }
