@@ -1,50 +1,56 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Card, CardImg, CardBody, CardTitle} from 'reactstrap';
 import {ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 
-class DishDetails extends Component{
-
-    constructor(props){
-        super(props);
-        console.log('Dish details constructor method is invoked..!');
+    function RenderDish({dish}) {
+        return(
+            <Card>
+                <CardImg src={dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.title}</CardTitle>
+                    <CardBody>{dish.description}</CardBody>
+                </CardBody>
+            </Card>
+        );
     }
 
-    render(){
-
-        const dish = this.props.dish;
-        console.log('Dish details component render method is invkoed');
-
-        if (dish != null){
-            const DishComments = this.props.dish.comments.map((comment) => {
+    function RenderComments({comments}) {
+        return (
+            comments.map((comment) => {
                 return(
                     <ListGroupItem key={comment.id}>
                         <ListGroupItemHeading>{comment.comment}</ListGroupItemHeading>
-                        <ListGroupItemText>{comment.author}, {new Intl.DateTimeFormat('en-IN',
-                                                                                        {year : 'numeric', month:'short', day : '2-digit'}
-                                                                                        ).format(new Date(Date.parse(comment.date)))}1 </ListGroupItemText>
+                        <ListGroupItemText>{comment.author},
+                            {new Intl.DateTimeFormat('en-IN',
+                                {year : 'numeric', month:'short', day : '2-digit'})
+                                .format(new Date(Date.parse(comment.date)))} </ListGroupItemText>
                     </ListGroupItem>
                 )
-            });
+            })
+        );
+    }
+
+    const DishDetails = (props) => {
+
+        const dish = props.dish;
+        console.log('Dish details component render method is invkoed');
+
+        if (dish != null){
 
             return(
 
                 <div className="container">
                     <div className="row">
                         <div className={"col-12 col-md-5 m-1"}>
-                            <Card>
-                                <CardImg src={dish.image} alt={dish.name} />
-                                <CardBody>
-                                    <CardTitle>{dish.title}</CardTitle>
-                                    <CardBody>{dish.description}</CardBody>
-                                </CardBody>
-                            </Card>
+                            <RenderDish dish={dish} />
                         </div>
                         <ListGroup className={"col-12 col-md-5 m-1"}>
                             <h3>Comments</h3>
-                            {DishComments}
+                            <RenderComments comments={dish.comments}/>
                         </ListGroup>
                     </div>
                 </div>
+
             )
 
         }else{
@@ -53,8 +59,8 @@ class DishDetails extends Component{
             )
         }
 
+
     }
 
-}
 
 export default DishDetails;
