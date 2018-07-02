@@ -62,8 +62,6 @@ class Main extends Component {
                     <Route exact path="/contactus" component={Contact} />
                     <Redirect to="/home" />
                 </Switch>
-                {/*<Menu dishes={this.state.dishes} onClick={(dishId) => (this.onDishSelect(dishId))}/>*/}
-                {/*<DishDetails dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/>*/}
                 <Footer/>
             </div>
         );
