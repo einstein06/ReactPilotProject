@@ -46,7 +46,7 @@ import {ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from
                         </div>
                         <ListGroup className={"col-12 col-md-5 m-1"}>
                             <h3>Comments</h3>
-                            <RenderComments comments={dish.comments}/>
+                            <RenderComments comments={props.comments}/>
                         </ListGroup>
                     </div>
                 </div>
