@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Navbar, NavbarBrand, Nav, NavbarToggler,
     Collapse, NavItem, Jumbotron, Modal,
-    ModalBody, ModalFooter, ModalHeader, Button, Input, Label,
+    ModalBody, ModalHeader, Button, Input, Label,
     Form, FormGroup} from 'reactstrap';
 
 import {NavLink} from 'react-router-dom';
