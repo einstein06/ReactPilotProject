@@ -153,7 +153,6 @@ class Contact extends Component {
                                     />
                                 </Col>
                             </Row>
-
                             <Row className="form-group">
                                 <Col md={{size:6, offset:2}}>
                                     <div className="form-check">
@@ -172,7 +171,6 @@ class Contact extends Component {
                                     </Control.select>
                                 </Col>
                             </Row>
-
                             <Row className="form-group">
                                 <Label htmlFor="message" md={2}>message</Label>
                                 <Col md={10}>
