@@ -73,7 +73,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
 
                 <div>
                     <Button onClick={this.toggleModal} className="btn-primary">
-                            <span className="fa fa-pencil"></span>
+                            <span className="fa fa-pencil fa-lg"></span>
                             Submit Feedback
                     </Button>
                     <Modal key="CommentForm" isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
