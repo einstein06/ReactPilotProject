@@ -8,36 +8,49 @@ import {Link} from 'react-router-dom';
 import {LocalForm, Control, Errors} from "react-redux-form";
 import {Loading} from './LoadingComponent';
 import {baseUrl} from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length > len);
 
     function RenderDish({dish}) {
-        return(
-            <Card>
-                <CardImg src={baseUrl+ dish.image} alt={dish.name} />
-                <CardBody>
-                    <CardTitle>{dish.name}</CardTitle>
-                    <CardBody>{dish.description}</CardBody>
-                </CardBody>
-            </Card>
+        return(<FadeTransform
+            in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
+                <Card>
+                    <CardImg src={baseUrl+ dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardBody>{dish.description}</CardBody>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         );
     }
 
     function RenderComments({comments, postComment, dishId}) {
 
-        const Comment = (commentslist) => comments.map((comment) => {
-            return(
-                <ListGroupItem key={comment.id}>
-                    <ListGroupItemHeading>{comment.comment}</ListGroupItemHeading>
-                    <ListGroupItemText>{comment.author},
-                        {new Intl.DateTimeFormat('en-IN',
-                            {year : 'numeric', month:'short', day : '2-digit'})
-                            .format(new Date(Date.parse(comment.date)))} </ListGroupItemText>
-                </ListGroupItem>
-            )
-        });
+        const Comment = (commentslist) =>
 
+            <Stagger in>
+                {
+                    comments.map((comment) => {
+                        return(
+                            <Fade in>
+                                <ListGroupItem key={comment.id}>
+                                    <ListGroupItemHeading>{comment.comment}</ListGroupItemHeading>
+                                    <ListGroupItemText>{comment.author},
+                                        {new Intl.DateTimeFormat('en-IN',
+                                            {year : 'numeric', month:'short', day : '2-digit'})
+                                            .format(new Date(Date.parse(comment.date)))} </ListGroupItemText>
+                                </ListGroupItem>
+                            </Fade>
+                        )
+                    })
+                }
+            </Stagger>
         return (
             <div>
                 <Comment commentslist={comments}/>
