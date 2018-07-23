@@ -6,6 +6,8 @@ import {
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {LocalForm, Control, Errors} from "react-redux-form";
+import {Loading} from './LoadingComponent';
+import {baseUrl} from "../shared/baseUrl";
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length > len);
@@ -13,7 +15,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
     function RenderDish({dish}) {
         return(
             <Card>
-                <CardImg src={dish.image} alt={dish.name} />
+                <CardImg src={baseUrl+ dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle>{dish.name}</CardTitle>
                     <CardBody>{dish.description}</CardBody>
@@ -22,7 +24,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
         );
     }
 
-    function RenderComments({comments}) {
+    function RenderComments({comments, addComment, dishId}) {
 
         const Comment = (commentslist) => comments.map((comment) => {
             return(
@@ -39,7 +41,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
         return (
             <div>
                 <Comment commentslist={comments}/>
-                <CommentForm/>
+                <CommentForm dishId={dishId} addComment={addComment}/>
             </div>
         );
     }
@@ -64,8 +66,11 @@ const minLength = (len) => (val) => (val) && (val.length > len);
             });
         }
 
-        handleSubmit(event){
-            alert(this.name.value);
+        handleSubmit(values){
+            this.toggleModal();
+            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+            // alert(this.name.value);
+
         }
 
         render(){
@@ -94,13 +99,13 @@ const minLength = (len) => (val) => (val) && (val.length > len);
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Label htmlFor="name" md={12}>Your name</Label>
+                                    <Label htmlFor="author" md={12}>Your name</Label>
                                     <Col md={12}>
-                                    <Control.text model=".name"
+                                    <Control.text model=".author"
                                         className="form-control"
                                                   type="text"
-                                                  id="name"
-                                                  name="name"
+                                                  id="author"
+                                                  name="author"
                                                   placeholder="Your name"
                                                   autoComplete="off"
                                                   validators = {{
@@ -139,9 +144,25 @@ const minLength = (len) => (val) => (val) && (val.length > len);
 
     const DishDetails = (props) => {
 
-        const dish = props.dish;
-
-        if (dish != null){
+        if (props.isLoading){
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMes){
+            return(
+                <div className="container">
+                    <div className="row">
+                        <h4>{props.errMes}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (props.dish != null){
 
             return(
 
@@ -160,11 +181,14 @@ const minLength = (len) => (val) => (val) && (val.length > len);
 
                     <div className="row">
                         <div className={"col-12 col-md-5 m-1"}>
-                            <RenderDish dish={dish} />
+                            <RenderDish dish={props.dish} />
                         </div>
                         <ListGroup className={"col-12 col-md-5 m-1"}>
                             <h3>Comments</h3>
-                            <RenderComments comments={props.comments}/>
+                            <RenderComments
+                                comments={props.comments}
+                                addComment={props.addComment}
+                                dishId={props.dish.id} />
                         </ListGroup>
                     </div>
                 </div>
