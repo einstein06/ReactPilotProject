@@ -24,7 +24,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
         );
     }
 
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({comments, postComment, dishId}) {
 
         const Comment = (commentslist) => comments.map((comment) => {
             return(
@@ -41,7 +41,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
         return (
             <div>
                 <Comment commentslist={comments}/>
-                <CommentForm dishId={dishId} addComment={addComment}/>
+                <CommentForm dishId={dishId} postComment={postComment}/>
             </div>
         );
     }
@@ -68,9 +68,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
 
         handleSubmit(values){
             this.toggleModal();
-            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
-            // alert(this.name.value);
-
+            this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
         }
 
         render(){
@@ -187,7 +185,7 @@ const minLength = (len) => (val) => (val) && (val.length > len);
                             <h3>Comments</h3>
                             <RenderComments
                                 comments={props.comments}
-                                addComment={props.addComment}
+                                postComment={props.postComment}
                                 dishId={props.dish.id} />
                         </ListGroup>
                     </div>
